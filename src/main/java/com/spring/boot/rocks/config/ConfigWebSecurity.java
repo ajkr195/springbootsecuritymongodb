@@ -3,35 +3,23 @@ package com.spring.boot.rocks.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.spring.boot.rocks")
 public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private UserDetailsService userDetailsService;
 
 	@Autowired
 	DataSource dataSource;
-
-	@Autowired
-	@Qualifier("persistentTokenRepository")
-	private PersistentTokenRepository persistentTokenRepository;
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -49,9 +37,7 @@ public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/listappusers/**").access("hasAuthority('ADMIN')")// .hasRole("ADMIN")
 				.antMatchers("/api/findappuser/**").access("hasAuthority('ADMIN')")// .hasRole("ADMIN")
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-
 				.and().logout().permitAll().and().rememberMe().rememberMeParameter("remember-me")
-				.tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService).and().csrf()
 				.disable().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
 
@@ -84,11 +70,5 @@ public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/img/**");
 	}
 
-	@Bean
-	public PersistentTokenRepository persistentTokenRepository() {
-		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-		tokenRepository.setDataSource(dataSource);
-		return tokenRepository;
-	}
 
 }

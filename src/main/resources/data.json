@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5e912548d3092e273d20ccea"},"name":"ADMIN"}
+{"_id":{"$oid":"5e91258fd3092e273d20cceb"},"name":"EDITOR"}
+{"_id":{"$oid":"5e9125a8d3092e273d20ccec"},"name":"VIEWER"}
+{"_id":{"$oid":"5e9125c2d3092e273d20ccee"},"name":"SUPERADMIN"}
+{"_id":{"$oid":"5e9125ced3092e273d20ccef"},"name":"LARALAPPA"}

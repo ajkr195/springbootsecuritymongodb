@@ -41,8 +41,8 @@ public class AppUserAddValidator implements Validator {
 			errors.rejectValue("password", "Size.userForm.password");
 		}
 
-//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "NotEmpty");
-//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "NoRoleSelected");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "NoRoleSelected");
 
 		
 	}
